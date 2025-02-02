@@ -188,7 +188,7 @@ Feel free to modify and use it for educational purposes! 🎉 </div>
 <h2>## 📞 Contact </h2>
 <div>💡 Found a bug or have suggestions? Open an issue or reach out:</div>
 <div>-> 📧 Email : panchaldhruvam19@gmail.com</div>
-<div>-> GitHub : <a href= "[github.com/Dhruvam1111](https://github.com/Dhruvam1111)">github.com/Dhruvam1111</a></div>
+<div>-> GitHub : <a href= "https://github.com/Dhruvam1111">github.com/Dhruvam1111</a></div>
 </body>
 <hr>
 <footer>
