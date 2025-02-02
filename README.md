@@ -2,7 +2,7 @@
 <h1># 🐍 Snake Game (C++)</h1>
 <p>A console-based Snake Game built in C++ using object-oriented programming (OOP) and linked lists. The game features smooth controls, difficulty selection, colored UI, and a flicker-free console experience.</p>
 </header>
----
+<hr>
 
 ## 📜 Table of Contents
 - [Features](#features)
