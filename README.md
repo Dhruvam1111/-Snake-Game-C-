@@ -4,7 +4,8 @@
 </header>
 <hr>
 
-## 📜 Table of Contents
+<div><h2>## 📜 Table of Contents</h2>
+  <ul>
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
@@ -17,6 +18,8 @@
 - [License](#license)
 - [Contributing](#contributing)
 - [Contact](#contact)
+  </ul>
+</div>
 
 ---
 
