@@ -1,7 +1,7 @@
 #include <iostream> // For stdin and stdout functions
 #include <conio.h>   // For _kbhit() and _getch()
 #include <windows.h> // For Sleep() and console cursor handling
-#include <cstdlib> // For rand() function and system("cls") 
+#include <cstdlib> // For rand() and system() functions
 #include <list> // To generate linked list function for snake
 
 using namespace std;
@@ -16,27 +16,27 @@ enum Direction // To define all directions of snake
     RIGHT // 4 (Implicitly assigned)
 };
 
-class SnakeGame 
+class SnakeGame // This class manages the game logic, rendering, and user input.
 {
 private:
-    bool gameOver;
-    int score;
-    int speed;
-    pair<int, int> food;
-    Direction dir;
+    bool gameOver; // Tracks whether the game is over.
+    int score; // Stores the player's current score.
+    int speed; // Controls snake movement speed.
+    pair<int, int> food; // Stores food's (y, x) coordinates.
+    Direction dir; // Enum to track the snake’s movement direction.
     list<pair<int, int>> snake; // Linked List for Snake's body
 
-    void moveCursorToTop()
+    void moveCursorToTop() // Moves the cursor back to (0,0) to prevent flickering when redrawing.
     {
-        COORD cursorPos;
-        cursorPos.X = 0;
-        cursorPos.Y = 0;
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPos);
+        COORD cursorPos; // Defines the coordinates of a character cell in a console screen buffer. 
+        cursorPos.X = 0; // Initializing X-coordinate = 0
+        cursorPos.Y = 0; // Initializing Y-coordinate = 0
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPos); // Sets the cursor position in the specified console screen buffer.
     }
 
-    void displayInstructions()
+    void displayInstructions() // To display instructions regarding the game at the beginning
     {
-        system("cls");
+        system("cls"); // To clear the console from all previous output
         cout << "========== SNAKE GAME ==========\n";
         cout << "Instructions:\n";
         cout << " - Use 'W' 'A' 'S' 'D' to move the snake.\n";
@@ -49,18 +49,18 @@ private:
         cout << " - Press '2' for Medium (Normal Speed)\n";
         cout << " - Press '3' for Hard  (Fast Speed)\n";
         cout << "================================\n\n";
-        system("pause");
+        system("pause"); // To pause a program and wait for a keyboard input to continue
     }
 
 public:
-    SnakeGame()
+    SnakeGame() // Constructor 
     {
         displayInstructions();
         setDifficulty();
         resetGame();
     }
 
-    void setDifficulty()
+    void setDifficulty() // Prompts the user to select a difficulty and adjusts the speed accordingly.
     {
         int choice;
         cout << "Select Difficulty Level:\n";
@@ -85,7 +85,7 @@ public:
         }
     }
 
-    void resetGame()
+    void resetGame() // Resets gameOver = false, score = 0, and initializes the snake with 3 segments. Calls spawnFood() to place the first food.
     {
         gameOver = false;
         dir = STOP;
@@ -102,9 +102,9 @@ public:
         spawnFood();
     }
 
-    void spawnFood()
+    void spawnFood() // Generates a random position for food. Ensures food doesn't spawn on the snake’s body.
     {
-        bool valid = false;
+        bool valid = false; 
         while (!valid)
         {
             food.first = rand() % HEIGHT;
@@ -121,7 +121,7 @@ public:
         }
     }
 
-    void drawBoard()
+    void drawBoard() // Clears and redraws the board each frame.
     {
         moveCursorToTop();
 
@@ -169,7 +169,7 @@ public:
         cout << "\nScore: " << score << endl;
     }
 
-    void handleInput()
+    void handleInput() // Uses _kbhit() and _getch() to detect and read user input (WASD for movement).
     {
         if (_kbhit())
         {
@@ -202,7 +202,7 @@ public:
         }
     }
 
-    void updateGame()
+    void updateGame() // Moves the snake in the current direction and checks if the food is eaten by it. Checks for collisions (walls or itself).
     {
         if (dir == STOP)
             return;
@@ -256,7 +256,8 @@ public:
         }
     }
 
-    void run()
+    void run() /* Continuously draws the board, handles input, updates the game, and sleeps (for smooth movement).
+    If gameOver, it displays the final score and waits for the user to restart (R) or exit (X). */
     {
         system("cls");
         while (!gameOver)
@@ -264,7 +265,7 @@ public:
             drawBoard();
             handleInput();
             updateGame();
-            Sleep(speed);
+            Sleep(speed); // Delay or inactive the present executable program for a specified time
         }
 
         cout << "\nGame Over! Final Score: " << score << endl;
@@ -291,7 +292,7 @@ public:
     }
 };
 
-int main()
+int main() // Creates an instance of SnakeGame. Calls game.run() to start the game.
 {
     SnakeGame game;
     game.run();
