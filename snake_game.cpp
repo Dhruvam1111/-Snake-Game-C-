@@ -1,22 +1,22 @@
-#include <iostream>
+#include <iostream> // For stdin and stdout functions
 #include <conio.h>   // For _kbhit() and _getch()
 #include <windows.h> // For Sleep() and console cursor handling
-#include <cstdlib>
-#include <list>
+#include <cstdlib> // For rand() function and system("cls") 
+#include <list> // To generate linked list function for snake
 
 using namespace std;
 
 const int WIDTH = 20, HEIGHT = 20;
-enum Direction
+enum Direction // To define all directions of snake
 {
     STOP = 0,
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
+    UP, // 1 (Implicitly assigned)
+    DOWN, // 2 (Implicitly assigned)
+    LEFT, // 3 (Implicitly assigned)
+    RIGHT // 4 (Implicitly assigned)
 };
 
-class SnakeGame
+class SnakeGame 
 {
 private:
     bool gameOver;
