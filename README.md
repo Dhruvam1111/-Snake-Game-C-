@@ -32,7 +32,7 @@
   </ul>
 <h2><b>## ✨ Features</b></h2>
   <ul>
-    <li><b>Grid-based gameplay (20x20)</b></li>
+    <li><b>Grid-based gameplay</b></li>
     <br>
     <li><b>Snake starts with 3 cells and grows when eating food</b></li>
     <br>

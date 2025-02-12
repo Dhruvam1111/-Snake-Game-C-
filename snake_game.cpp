@@ -1,16 +1,18 @@
-#include <iostream> // For stdin and stdout functions
+#include <iostream>  // For stdin and stdout functions
 #include <conio.h>   // For _kbhit() and _getch()
 #include <windows.h> // For Sleep() and console cursor handling
-#include <cstdlib> // For rand() and system() functions
-#include <list> // To generate linked list function for snake
+#include <cstdlib>   // For rand() and system() functions
+#include <list>      // To generate linked list function for snake
 
 using namespace std;
 
-const int WIDTH = 20, HEIGHT = 20;
+const int WIDTH = 40, HEIGHT = 20;
+int highScore = 0; // Global variable to store the highest score across games
+
 enum Direction // To define all directions of snake
 {
     STOP = 0,
-    UP, // 1 (Implicitly assigned)
+    UP,   // 1 (Implicitly assigned)
     DOWN, // 2 (Implicitly assigned)
     LEFT, // 3 (Implicitly assigned)
     RIGHT // 4 (Implicitly assigned)
@@ -19,24 +21,24 @@ enum Direction // To define all directions of snake
 class SnakeGame // This class manages the game logic, rendering, and user input.
 {
 private:
-    bool gameOver; // Tracks whether the game is over.
-    int score; // Stores the player's current score.
-    int speed; // Controls snake movement speed.
-    pair<int, int> food; // Stores food's (y, x) coordinates.
-    Direction dir; // Enum to track the snake’s movement direction.
+    bool gameOver;              // Tracks whether the game is over.
+    int score;                  // Stores the player's current score.
+    int speed;                  // Controls snake movement speed.
+    pair<int, int> food;        // Stores food's (y, x) coordinates.
+    Direction dir;              // Enum to track the snake’s movement direction.
     list<pair<int, int>> snake; // Linked List for Snake's body
 
     void moveCursorToTop() // Moves the cursor back to (0,0) to prevent flickering when redrawing.
     {
-        COORD cursorPos; // Defines the coordinates of a character cell in a console screen buffer. 
-        cursorPos.X = 0; // Initializing X-coordinate = 0
-        cursorPos.Y = 0; // Initializing Y-coordinate = 0
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPos); // Sets the cursor position in the specified console screen buffer.
+        COORD cursorPos;
+        cursorPos.X = 0;
+        cursorPos.Y = 0;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPos);
     }
 
     void displayInstructions() // To display instructions regarding the game at the beginning
     {
-        system("cls"); // To clear the console from all previous output
+        system("cls");
         cout << "========== SNAKE GAME ==========\n";
         cout << "Instructions:\n";
         cout << " - Use 'W' 'A' 'S' 'D' to move the snake.\n";
@@ -49,11 +51,11 @@ private:
         cout << " - Press '2' for Medium (Normal Speed)\n";
         cout << " - Press '3' for Hard  (Fast Speed)\n";
         cout << "================================\n\n";
-        system("pause"); // To pause a program and wait for a keyboard input to continue
+        system("pause");
     }
 
 public:
-    SnakeGame() // Constructor 
+    SnakeGame() // Constructor
     {
         displayInstructions();
         setDifficulty();
@@ -72,16 +74,16 @@ public:
         {
         case 1:
             speed = 150;
-            break; // Slow
+            break;
         case 2:
             speed = 100;
-            break; // Normal
+            break;
         case 3:
             speed = 50;
-            break; // Fast
+            break;
         default:
             speed = 100;
-            break; // Default to Medium
+            break;
         }
     }
 
@@ -92,7 +94,6 @@ public:
         score = 0;
         snake.clear();
 
-        // Initialize Snake with 3 cells
         int startX = WIDTH / 2, startY = HEIGHT / 2;
         for (int i = 0; i < 3; i++)
         {
@@ -104,7 +105,7 @@ public:
 
     void spawnFood() // Generates a random position for food. Ensures food doesn't spawn on the snake’s body.
     {
-        bool valid = false; 
+        bool valid = false;
         while (!valid)
         {
             food.first = rand() % HEIGHT;
@@ -166,7 +167,7 @@ public:
         // Bottom Wall
         for (int i = 0; i < WIDTH + 2; i++)
             cout << "\033[34m#\033[0m";
-        cout << "\nScore: " << score << endl;
+        cout << "\nScore: " << score << "  |  High Score: " << highScore << endl;
     }
 
     void handleInput() // Uses _kbhit() and _getch() to detect and read user input (WASD for movement).
@@ -223,8 +224,6 @@ public:
         case RIGHT:
             newHead.second++;
             break;
-        default:
-            break;
         }
 
         if (newHead.first < 0 || newHead.first >= HEIGHT ||
@@ -248,6 +247,8 @@ public:
         if (newHead == food)
         {
             score += 10;
+            if (score > highScore)
+                highScore = score; // Update high score
             spawnFood();
         }
         else
@@ -256,8 +257,7 @@ public:
         }
     }
 
-    void run() /* Continuously draws the board, handles input, updates the game, and sleeps (for smooth movement).
-    If gameOver, it displays the final score and waits for the user to restart (R) or exit (X). */
+    void run()
     {
         system("cls");
         while (!gameOver)
@@ -265,7 +265,7 @@ public:
             drawBoard();
             handleInput();
             updateGame();
-            Sleep(speed); // Delay or inactive the present executable program for a specified time
+            Sleep(speed);
         }
 
         cout << "\nGame Over! Final Score: " << score << endl;
@@ -278,21 +278,22 @@ public:
             if (choice == 'r' || choice == 'R')
             {
                 system("cls");
-                displayInstructions();
-                setDifficulty(); // Ask for difficulty again
+                setDifficulty();
                 resetGame();
                 run();
                 return;
             }
             else if (choice == 'x' || choice == 'X')
             {
+                cout << "\nHighest Score Across Games: " << highScore << "\n"
+                     << endl;
                 exit(0);
             }
         }
     }
 };
 
-int main() // Creates an instance of SnakeGame. Calls game.run() to start the game.
+int main()
 {
     SnakeGame game;
     game.run();
