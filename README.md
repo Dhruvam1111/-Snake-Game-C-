@@ -45,6 +45,8 @@
     <li><b>Collision detection (walls & self)</b></li>
     <br>
     <li><b>Score tracking and restart option</b></li>
+    <br>
+    <li><b>High score maintenance across all the games played until the exit key 'X' pressed</b></li>
   </ul>
 <h2><b>## 🛠 Installation</b></h2>
   <ol type="I">
@@ -200,9 +202,6 @@
 <div>🔹 Power-Ups – Introduce special food that grants speed boosts or extra points.</div>
   <br>
 <div>🔹 Multiplayer Mode – Allow two players to control different snakes.</div>
-  <br>
-<div>🔹 High Score System – Save & display the highest score across sessions.</div>
-  <br>
 <h2>## 📜 License </h2>
 <div>This project is open-source and available under the MIT License.
 Feel free to modify and use it for educational purposes! 🎉 </div>
